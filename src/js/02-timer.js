@@ -10,7 +10,7 @@ const minutes = document.querySelector('.value[data-minutes]');
 const seconds = document.querySelector('.value[data-seconds]');
 
 let pickedTime;
-let timerId = null;
+let timerID;
 let date = new Date();
 
 startBtn.setAttribute('disabled', '');
@@ -25,20 +25,18 @@ const options = {
       Notiflix.Notify.failure('Please choose a date in the future');
     } else {
       startBtn.removeAttribute('disabled');
-      pickedTime = selectedDates[0];
+      pickedTime = selectedDates[0];      
+      clearInterval(timerID);
     }
   },
 };
 
 flatpickr(input, options);
-// startBtn.addEventListener('click', countingTime)
 
 startBtn.addEventListener('click', () => {
-  startBtn.setAttribute('disabled', '');
+  startBtn.setAttribute('disabled', '');  
   countingTime();
-  timerId = setInterval(() => {
-    countingTime();
-  }, 1000);
+  timerID = setInterval(countingTime, 1000); 
 });
 
 function addLeadingZero(value) {
@@ -48,9 +46,10 @@ function addLeadingZero(value) {
 function countingTime() {
   date = new Date();
   if (pickedTime < date.getTime()) {
-    clearInterval(timerId);
+    clearInterval(timerID);
     return;
-  } else {
+  } 
+  else {    
     const timerObj = convertMs(pickedTime - date.getTime());
     days.innerHTML = addLeadingZero(timerObj.days);
     hours.innerHTML = addLeadingZero(timerObj.hours);

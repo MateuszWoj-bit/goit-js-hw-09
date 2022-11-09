@@ -19,7 +19,7 @@ startBtn.addEventListener('click', () => {
   stopBtn.removeAttribute('disabled');
   timerId = setInterval(() => {
     handleColorChange();
-  }, 600);
+  }, 1000);
 });
 
 stopBtn.addEventListener('click', () => {
